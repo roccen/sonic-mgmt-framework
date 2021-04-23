@@ -55,30 +55,30 @@ clitree:
 clish:
 	SONIC_CLI_ROOT=$(BUILD_DIR) $(MAKE) -C CLI/klish
 
-.PHONY: rest
-rest: $(GO_DEPS) models
-	$(MAKE) -C rest
+#.PHONY: rest
+#rest: $(GO_DEPS) models
+#	$(MAKE) -C rest
 
 # Special target for local compilation of REST server binary.
 # Compiles models, translib and cvl schema from sonic-mgmt-common
-rest-server: go-deps-clean
-	NO_TEST_BINS=1 $(MAKE) -C $(MGMT_COMMON_DIR)
-	NO_TEST_BINS=1 $(MAKE) rest
+#rest-server: go-deps-clean
+#	NO_TEST_BINS=1 $(MAKE) -C $(MGMT_COMMON_DIR)
+#	NO_TEST_BINS=1 $(MAKE) rest
 
-rest-clean: go-deps-clean models-clean
-	$(MAKE) -C rest clean
+#rest-clean: go-deps-clean models-clean
+#	$(MAKE) -C rest clean
 
-$(GO_CODEGEN_INIT):
-	$(MAKE) -C models -f openapi_codegen.mk go-server-init
+#$(GO_CODEGEN_INIT):
+#	$(MAKE) -C models -f openapi_codegen.mk go-server-init
 
-.PHONY: models
-models: | $(GO_CODEGEN_INIT)
-	$(MAKE) -C models
+#.PHONY: models
+#models: | $(GO_CODEGEN_INIT)
+#	$(MAKE) -C models
 
-models-clean:
-	$(MAKE) -C models clean
+#models-clean:
+#	$(MAKE) -C models clean
 
-clean: rest-clean models-clean
+clean:
 	git check-ignore debian/* | xargs -r $(RM) -r
 	$(RM) -r debian/.debhelper
 	$(RM) -r $(BUILD_DIR)
